@@ -98,7 +98,6 @@ def ApplyJob(request, id):
             form.instance.job= job
             form.instance.candidate= seeker
             form.save()
-            model_cv= models.ApplyJob.objects.get(job= job, candidate= seeker)
             messages.success(request, f'Sent Application Successfully')
             
             # to_email= job.employer.user.email
