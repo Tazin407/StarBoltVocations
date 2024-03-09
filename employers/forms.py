@@ -32,7 +32,7 @@ class EmployerRegistration(UserCreationForm):
             district= self.cleaned_data.get('district')
             country= self.cleaned_data.get('country')
             
-            forms.Employer.objects.create(
+            models.Employer.objects.create(
                 user= our_user,
                 contact= contact,
                 company_name= company_name,
