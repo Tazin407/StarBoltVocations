@@ -1,7 +1,7 @@
 from django.db.models.query import QuerySet
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, View
+from django.views.generic import CreateView, DetailView, View,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from django.contrib import messages
@@ -70,6 +70,13 @@ class JobDetails(DetailView):
                     seeker= Seeker.objects.get(user= self.request.user)
                     context['type']= 'seeker'
                     self.template_name = 'job_details_seeker.html'
+                    try :
+                        apply= models.ApplyJob.objects.get(candidate= seeker, job__id=self.kwargs[self.pk_url_kwarg])
+                        context['applied']= True
+                        
+                    except models.ApplyJob.DoesNotExist:
+                        context['applied'] = False
+                        
                     
                 except Seeker.DoesNotExist:
                     context['type']= 'none'
@@ -91,10 +98,35 @@ def ApplyJob(request, id):
             form.instance.job= job
             form.instance.candidate= seeker
             form.save()
-
-    
+            model_cv= models.ApplyJob.objects.get(job= job, candidate= seeker)
+            messages.success(request, f'Sent Application Successfully')
+            
+            to_email= job.employer.user.email
+            
+            mail_subject="A new Application"
+            message= render_to_string('new_application.html',{'job': job.title})
+            send_email= EmailMultiAlternatives(mail_subject,'', to=[request.user.email] )
+            send_email.attach_alternative(message, 'text/html')
+            send_email.attach(model_cv.cv.name, model_cv.cv.read(), model_cv.cv.file.content_type)
+            send_email.send()
+            return redirect('job_details', id)
+      
     form= forms.ApplyJobForm()
-    return render(request, 'apply_job.html',{'form': form, 'job': job})            
+    return render(request, 'apply_job.html',{'form': form, 'job': job})     
+
+def CancelApplication(request, id):
+    seeker= Seeker.objects.get(user= request.user)
+    job= models.Job.objects.get(id= id)
+    apply= models.ApplyJob.objects.get(candidate= seeker, job=job)
+    apply.delete()
+    
+    mail_subject="Transaction Message"
+    message= render_to_string('cancel_application.html',{'job': job.title})
+    send_email= EmailMultiAlternatives(mail_subject,'', to=[request.user.email] )
+    send_email.attach_alternative(message, 'text/html')
+    send_email.send()
+    
+    return redirect('job_details', id)
     
     
     

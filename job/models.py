@@ -28,8 +28,8 @@ class Job(models.Model):
         return self.title
     
 class ApplyJob(models.Model):
-    candidate= models.ForeignKey(Seeker, on_delete= models.CASCADE)
-    job= models.ForeignKey(Job, on_delete= models.CASCADE)
+    candidate= models.ForeignKey(Seeker, related_name= 'applied', on_delete= models.CASCADE)
+    job= models.ForeignKey(Job,related_name= 'job', on_delete= models.CASCADE)
     experience= models.CharField(max_length= 100)
     cv= models.FileField(upload_to='static/uploaded_cv/')
     

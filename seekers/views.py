@@ -51,7 +51,7 @@ def JobFilter(request, id):
     category= Category.objects.get(id=id)
     jobs= Job.objects.filter(category= category)
     all_category= Category.objects.all()
-    print(jobs)
+    
     
     return render(request, 'show_job_seeker.html', {'job_list':jobs,'category': all_category})
     

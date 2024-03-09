@@ -16,6 +16,9 @@ class Seeker(models.Model):
     skillset= models.TextField()
     experience= models.TextField()
     
+    def __str__(self) -> str:
+        return self.user.username
+    
     
     
 class SeekerPersonal(models.Model):

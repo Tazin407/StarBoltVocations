@@ -54,8 +54,15 @@
         {% endif %}
 
 
-        <div><a class="btn btn-success" href="{% url 'apply_job' job.id %}">Apply Now</a></div>
+       {% if applied == True %}
+       
+       <div><a class="btn btn-success" href="{% url 'cancel_application' job.id %}">Cancel Application</a></div>
 
+
+       {% else %}
+       <div><a class="btn btn-success" href="{% url 'apply_job' job.id %}">Apply Now</a></div>
+
+       {% endif %}
     </div>
 </div>
 
