@@ -4,6 +4,7 @@ from .import models
 from .import forms
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.http import Http404, HttpRequest, HttpResponse
@@ -31,7 +32,8 @@ class EmployerLogin(LoginView):
     def get_success_url(self) -> str:
         return reverse_lazy('employer_profile')
     
-class EmpProfileView(View):
+
+class EmpProfileView(View, LoginRequiredMixin):
     template_name= 'employer_profile.html'
     
     def get(self, request):
