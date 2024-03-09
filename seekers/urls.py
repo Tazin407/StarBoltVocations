@@ -6,4 +6,6 @@ urlpatterns = [
     path('seeker_profile/', views.ProfileView.as_view(), name="seeker_profile"),
     path('jobs/', views.SeekerJobView.as_view(), name="show_job_seeker"),
    path('filter_job/<int:id>', views.JobFilter, name='filter_job_seeker'),
+   path('show_applied_jobs/', views.Show_Applied_Jobs.as_view(), name='show_applied_jobs')
 ]
+

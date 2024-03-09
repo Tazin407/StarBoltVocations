@@ -99,19 +99,11 @@ def ApplyJob(request, id):
             form.instance.candidate= seeker
             form.save()
             messages.success(request, f'Sent Application Successfully')
-            
-            # to_email= job.employer.user.email
-            
-            # mail_subject="A new Application"
-            # message= render_to_string('new_application.html',{'job': job.title})
-            # send_email= EmailMultiAlternatives(mail_subject,'', to=[request.user.email] )
-            # send_email.attach_alternative(message, 'text/html')
-            # send_email.attach(model_cv.cv.name, model_cv.cv.read(), model_cv.cv.file.content_type)
-            # send_email.send()
             return redirect('job_details', id)
       
     form= forms.ApplyJobForm()
-    return render(request, 'apply_job.html',{'form': form, 'job': job})     
+    return render(request, 'apply_job.html',{'form': form, 'job': job})  
+
 
 def CancelApplication(request, id):
     seeker= Seeker.objects.get(user= request.user)
@@ -119,13 +111,22 @@ def CancelApplication(request, id):
     apply= models.ApplyJob.objects.get(candidate= seeker, job=job)
     apply.delete()
     
-    mail_subject="Transaction Message"
+    mail_subject="Cancelletion Message"
     message= render_to_string('cancel_application.html',{'job': job.title})
     send_email= EmailMultiAlternatives(mail_subject,'', to=[request.user.email] )
     send_email.attach_alternative(message, 'text/html')
     send_email.send()
     
     return redirect('job_details', id)
+
+class ShowPosts(ListView):
+    model= models.Job
+    template_name= 'all_posts.html'
+    
+    def get_queryset(self):
+        employer= models.Employer.objects.get(user= self.request.user)
+        queryset= models.Job.objects.filter(employer= employer)
+        return queryset
     
     
     

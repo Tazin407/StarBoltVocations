@@ -7,4 +7,5 @@ urlpatterns = [
    path('filter_job/<int:id>', views.JobFilter, name='filter_job'),
    path('apply_job/<int:id>', views.ApplyJob, name='apply_job'),
    path('cancel_application/<int:id>', views.CancelApplication, name='cancel_application'),
+   
 ]

@@ -1,0 +1,38 @@
+{%extends 'seeker_browse.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-around" >
+
+</div>
+
+<div class="m-auto p-3 w-50" >
+
+    {% if not job_list %}
+    
+    <h4 class="text-red-700 vh-100 align-items-center">You have not posted for any jobs yet</h4>
+    
+    {% else %}
+
+    {%for job in job_list %}
+
+    <div class="card">
+        <div class="card-header">
+          
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{job.title}}</h5>
+          <p class="card-text">{{job.description}} content.</p>
+          <button class='btn btn-light'>{{job.category}}</button> <br> <br>
+          <a href="{% url 'job_details' job.id %}" class="btn btn-primary">See Details</a>
+        </div>
+      </div>
+
+    {% endfor %}
+    
+    {% endif %}
+
+</div>
+
+
+{% endblock  %}

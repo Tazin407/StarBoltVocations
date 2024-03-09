@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from .import models
 from django.views.generic import ListView
 from .import models
-from job.models import Job,Category
+from job.models import Job,Category, ApplyJob
 from django.http import HttpResponse 
 from .import forms
 from django.urls import reverse_lazy
@@ -86,6 +86,18 @@ class ProfileView(View):
             return redirect('seeker_profile')
         
         return render(request, self.template_name, {'form': form, 'seeker': seeker})
+    
+class Show_Applied_Jobs(ListView):
+    model= Job
+    template_name= 'show_applied_jobs.html'
+    context_object_name= 'job_list'
+    
+    def get_queryset(self):
+        seeker= models.Seeker.objects.get(user= self.request.user)
+        candidate_jobs = ApplyJob.objects.filter(candidate=seeker)
+        queryset = [apply_job.job for apply_job in candidate_jobs]
+        return queryset
+    
     
 def logout(request):
     logout(request)
