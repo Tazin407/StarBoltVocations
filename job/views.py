@@ -101,14 +101,14 @@ def ApplyJob(request, id):
             model_cv= models.ApplyJob.objects.get(job= job, candidate= seeker)
             messages.success(request, f'Sent Application Successfully')
             
-            to_email= job.employer.user.email
+            # to_email= job.employer.user.email
             
-            mail_subject="A new Application"
-            message= render_to_string('new_application.html',{'job': job.title})
-            send_email= EmailMultiAlternatives(mail_subject,'', to=[request.user.email] )
-            send_email.attach_alternative(message, 'text/html')
-            send_email.attach(model_cv.cv.name, model_cv.cv.read(), model_cv.cv.file.content_type)
-            send_email.send()
+            # mail_subject="A new Application"
+            # message= render_to_string('new_application.html',{'job': job.title})
+            # send_email= EmailMultiAlternatives(mail_subject,'', to=[request.user.email] )
+            # send_email.attach_alternative(message, 'text/html')
+            # send_email.attach(model_cv.cv.name, model_cv.cv.read(), model_cv.cv.file.content_type)
+            # send_email.send()
             return redirect('job_details', id)
       
     form= forms.ApplyJobForm()
