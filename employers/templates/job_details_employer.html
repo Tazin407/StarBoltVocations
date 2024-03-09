@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .job_detail_container{
+        background-color: rgb(57, 86, 97);
+        margin: auto;
+        margin-top: 2%;
+        padding: 10px;
+        width: 50%;
+        padding-bottom: 4px;
+        border-radius: 20px;
+    }
+    
+    .job-header{
+        text-align: center;
+    }
+</style>
+
+<div class="job_detail_container">
+
+    <div class="job-header" >
+    <h1>{{job.title}}</h1>
+    <h3>{{job.status}}</h3>
+    <small>Posted on {{job.date}}<br>Posted by employer {{job.employer.user.first_name}} {{job.employer.user.last_name}}</small>
+    </div>
+
+    <div class="catagory_container d-flex">
+        
+        <button class="btn btn-light" disabled>{{job.category}}</button>
+
+    </div>
+    <div class='description_and_requirements text-center' >
+
+        <h3 class="text-teal-800" >Description</h3><br><br>
+        {{job.description}}<br>
+        <br>
+
+        <h3 class="text-teal-600">Requirements</h3><br>
+        {{job.requirements}}<br>
+        <br>
+        <h3 class="text-teal-600 ">Responsibility</h3><br>
+        {{job.responsibility}}<br>
+        <br>
+        <h3 class="text-teal-600 ">Location</h3><br>
+        {{job.location}}<br>
+        <br>
+        {%if job.deadline == null%}
+        
+        {% else %}
+        <p class="text-danger" >Deadline: {{job.deadline}}</p>
+
+        {% endif %}
+
+
+
+    </div>
+
+    
+
+</div>
+
+
+{% endblock  %}

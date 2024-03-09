@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{%block content%}
+
+{% comment %} <h3 class="m-auto align-items-center">Register as Employer</h3> {% endcomment %}
+
+{% if type == 'employer' %}
+
+<div class="m-auto align-text-center"><h1>Sign Up as An Employer</h1></div>
+
+{% else %}
+
+<div class="m-auto align-items-center"><h1>Sign Up as a Job Candidate</h1></div>
+{% endif %}
+
+<form method='POST' action="" class="w-50 m-auto">
+    {% csrf_token %}
+     
+    {{form | crispy}}
+
+    <button class="btn btn-warning" type="submit ">Submit</button>
+
+</form>
+
+{% endblock %}
