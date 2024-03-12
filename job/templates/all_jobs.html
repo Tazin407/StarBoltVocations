@@ -14,6 +14,12 @@
 
 <div class="m-auto p-3 w-50" >
 
+    {% if job_list|length == 0 %}
+    
+    <div class="align-text-center vh-100 d-flex justify-center mt-4" > <h4 class="text-danger">No Job found</h4></div>
+    
+    {% else %}
+
     {%for job in job_list %}
 
     <div class="card">
@@ -22,13 +28,16 @@
         </div>
         <div class="card-body">
           <h5 class="card-title">{{job.title}}</h5>
-          <p class="card-text">{{job.description}} content.</p>
+          <p class="card-text">{{job.description}}</p>
           <button class='btn btn-light'>{{job.category}}</button> <br> <br>
           <a href="{% url 'job_details' job.id %}" class="btn btn-primary">See Details</a>
         </div>
       </div>
 
     {% endfor %}
+    
+    
+    {% endif %}
 
 </div>
 
