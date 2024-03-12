@@ -19,6 +19,7 @@ class EmpRegister(CreateView):
     def get_context_data(self, **kwargs) :
         context= super().get_context_data(**kwargs)
         context['type']= 'employer'
+        context['purpose']= 'Sign Up'
         return context
     
 class EmployerLogin(LoginView):
@@ -27,6 +28,7 @@ class EmployerLogin(LoginView):
     def get_context_data(self, **kwargs) :
         context= super().get_context_data(**kwargs)
         context['type']= 'employer'
+        context['purpose']= 'Log In'
         return context
     
     def get_success_url(self) -> str:

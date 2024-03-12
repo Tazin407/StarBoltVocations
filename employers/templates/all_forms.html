@@ -8,14 +8,14 @@
 
 {% if type == 'employer' %}
 
-<div class="m-auto align-text-center"><h1>Sign Up as An Employer</h1></div>
+<div class="m-auto mt-4 text-center"><h1>{{purpose}} as An Employer</h1></div>
 
 {% else %}
 
-<div class="m-auto align-items-center"><h1>Sign Up as a Job Candidate</h1></div>
+<div class="m-auto mt-4 p-4 pb-3 text-center"><h1>{{purpose}} as a Job Candidate</h1></div>
 {% endif %}
 
-<form method='POST' action="" class="w-50 m-auto">
+<form method='POST' action="" class="w-50 m-auto align-center">
     {% csrf_token %}
      
     {{form | crispy}}

@@ -18,6 +18,7 @@ class SeekerRegister(CreateView):
     def get_context_data(self, **kwargs) :
         context= super().get_context_data(**kwargs)
         context['type']= 'seeker'
+        context['purpose']= 'Sign Up'
         return context
     
 class SeekerLogin(LoginView):
@@ -26,6 +27,7 @@ class SeekerLogin(LoginView):
     def get_context_data(self, **kwargs) :
         context= super().get_context_data(**kwargs)
         context['type']= 'seeker'
+        context['purpose']= 'Log In'
         return context
     
     def get_success_url(self) -> str:
