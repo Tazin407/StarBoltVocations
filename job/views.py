@@ -1,7 +1,7 @@
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, View,DeleteView
+from django.views.generic import CreateView, DetailView, View,DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView
 from django.contrib import messages
@@ -23,6 +23,12 @@ class JobFormView(CreateView, LoginRequiredMixin):
         print(form)
         messages.success(self.request, 'Created a posting successfully')
         return super().form_valid(form)
+    
+class EditJobView(UpdateView):
+    template_name='job_form.html'
+    model= models.Job
+    form_class= forms.JobForm
+    pk_url_kwarg= 'id'
     
 class JobView(ListView):
     model= models.Job
@@ -61,6 +67,17 @@ class JobDetails(DetailView):
             
             try:
                 employer= Employer.objects.get(user= self.request.user)
+                job= self.get_object()
+                context['id']= self.pk_url_kwarg
+                
+                if job.employer == employer:
+                    context ['my_post'] = True
+                    print('yea')
+                    
+                else:
+                    context['my_post'] = False
+                    print('no')
+                
                 context['type']='employer'
                 self.template_name = 'job_details_employer.html'
 
@@ -127,6 +144,13 @@ class ShowPosts(ListView):
         employer= models.Employer.objects.get(user= self.request.user)
         queryset= models.Job.objects.filter(employer= employer)
         return queryset
+    
+def delete_job(request, id):
+    job= models.Job.objects.get(id=id)
+    job.delete()
+    
+    return redirect('show_posts')
+    
     
     
     

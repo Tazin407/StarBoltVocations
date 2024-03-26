@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, View
+from django.views.generic import CreateView, View, TemplateView
 from .import models
 from .import forms
 from django.urls import reverse_lazy
@@ -35,8 +35,11 @@ class EmployerLogin(LoginView):
         return reverse_lazy('employer_profile')
     
 
-class EmpProfileView(View, LoginRequiredMixin):
+class EmpProfileView(TemplateView,  LoginRequiredMixin):
     template_name= 'employer_profile.html'
+
+class EmpProfileEditView(View, LoginRequiredMixin):
+    template_name= 'edit_profile.html'
     
     def get(self, request):
         

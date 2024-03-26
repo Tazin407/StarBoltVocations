@@ -25,6 +25,37 @@
           <p class="card-text">{{job.description}}</p>
           <button class='btn btn-light'>{{job.category}}</button> <br> <br>
           <a href="{% url 'job_details' job.id %}" class="btn btn-primary">See Details</a>
+
+
+{% comment %} The modal starts here {% endcomment %}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Delete
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        Are you sure you want to delete this post ?
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-danger" href="{% url 'delete_job' job.id %}">Yes</a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% comment %} And ends here {% endcomment %}
+
+
+         
         </div>
       </div>
 

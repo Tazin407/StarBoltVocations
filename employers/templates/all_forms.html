@@ -8,11 +8,20 @@
 
 {% if type == 'employer' %}
 
-<div class="m-auto mt-4 text-center"><h1>{{purpose}} as An Employer</h1></div>
+<div class="m-auto mt-4 text-center"><h1>{{purpose}} as An Employer</h1><br>
+    {% if purpose == 'Sign Up' %}
+    <small class="text-danger" >Please fill out the information carefully. Changing the info later would cause some hassle. </small>
+
+    {% endif %}</div>
 
 {% else %}
 
-<div class="m-auto mt-4 p-4 pb-3 text-center"><h1>{{purpose}} as a Job Candidate</h1></div>
+<div class="m-auto mt-4 p-4 pb-3 text-center"><h1>{{purpose}} as a Job Candidate</h1>
+    {% if purpose == 'Sign Up' %}
+    <small class="text-danger" >Please fill out the information carefully. Changing the info later would cause some hassle. </small>
+
+    {% endif %}
+</div>
 {% endif %}
 
 <form method='POST' action="" class="w-50 m-auto align-center">
